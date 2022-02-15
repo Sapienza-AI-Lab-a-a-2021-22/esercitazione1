@@ -1,64 +1,44 @@
-# CSE 576 Homework 1 #
+# Disclamer: This lab is heavily based on the 576 homework that you can find here: # 
+## https://github.com/holynski/cse576_sp20_hw1 ##
 
-Welcome friends,
+# Esercitazione 1 di AI-Lab #
 
-For the first assignment we'll just get to know the codebase a little bit and practice manipulating images, transforming things, breaking stuff, it should be fun!
+## Setup generale ##
+Questo è il setup da seguire per impostare il repo sulla vostra macchina personale. 
+Più sotto trovate le istruzioni per impostarlo sulla macchina virtuale di laboratorio. 
 
+**NB: è noevolmente più semplice impostare tutti i tool e le librerie necessarie su una distribuzione linux. 
+In ogni caso non verrà dato supporto all'installazione da parte del docente e dei TA su macchine personali.**
 
+### Scaricate il repository ###
+Il repository si trova su github:
 
-## Setting up codebase ##
+    git clone https://github.com/Sapienza-AI-Lab-a-a-2021-22/esercitazione1.git
 
-### Download the repository ###
-Download from github.
-
-    git clone https://github.com/holynski/cse576_sp20_hw1
-
-### Install CMake ###
+### Installate CMake ###
+Seguite le istruzioni che trovate qui:
 
     https://cmake.org/install/
 
 ### Compile ###
-We will build the library using `cmake` and `make`. Conveniently there is a bash script `compile.sh`, that does that for you. We advise to use Linux or MacOS for the homework since setting up cmake and make will be simpler.
+Potete usare la classica pipeline `cmake` e `make`, oppure lo script
+`compile.sh`. In alternativa potete utilizzare un IDE come CLion per compilare tutto.
 
-#### Linux and MacOS ####
 Go to the downloaded folder and here are some commands that can help you:
+Per il file `compile.sh`, andate nella cartella del progetto e usate questi comandi:
 
-    ./compile.sh # runs cmake and make for you and produces ./test0
-    # that is basically all you should need.
-    ./clean.sh # cleans all files
-    ./compile.sh # compiles again
+    ./compile.sh # chiama cmake e make per voi e produce ./test0
+    # questo è quello che vi serve per lavorare. I
+    # n aggiunta potreste voler usare anche questo comandi:
+    ./clean.sh # cancella tutti i file generati
+    ./compile.sh # compila di nuovo
 
-Or if you want to compile manually do this:
+Per compilare manualmente:
 
     cd build
     rm -rf *
     cmake ..
     make -j4
-
-#### Windows ####
-Please see [Instructions for Windows](README-Windows.md)
-
-##### Execution #####
-
-    If you run the program from the Windows Command Line Console (started using "cmd" in the Windows Search window at the bottom left),
-    cd to the main directory as your working directory: e.g. D:\Projects\MySandBox\UW_CS576\HW1
-    This will be your working directory
-    To run the test program, give the full pathname: e.g.
-    "D:\Projects\MySandBox\UW_CS576\HW1\src\x64\Release\UW_CS576_HW1.exe"
-    Note that "UW_CS576_HW1.exe" is the executable for the program you built called "test0"
-
-##### For Debugging in VS ######
-
-    Choose the Debug  X64/x86 setting and Build the Project
-    In Projects->Properties Options Window
-    Choose "Debugging" from the left panel "Configuration Properties"
-    On the right Window,
-    In Working Directory, enter the path to the build directory of the project: 
-    e.g. D:\Projects\MySandBox\UW_CS576\HW1
-
-    Run the program. A console window will show the output.
-    If you want to have the window remain open while you see the output put breakpoints appropriately in the source and run with stepping through the code.
-
 
 ### Run/Test ###
 
