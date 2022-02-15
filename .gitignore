@@ -1,5 +1,7 @@
 .idea/*
 cmake-build-debug/*
+output/*
+test0
 
 # Prerequisites
 *.d

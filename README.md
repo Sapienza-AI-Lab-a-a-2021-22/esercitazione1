@@ -42,21 +42,21 @@ Per compilare manualmente:
 
 ### Run/Test ###
 
-Everytime you make any changes to the code, run the above build command. We have provided a simple test program to test some of the functionality. Then you can quickly test your changes by running:
+Ogni volta che fate dei cambiamenti al codice dovete compilare. Il programma da girare è 
 
     ./test0
 
-If you run the above code without making any changes to the original repo, you will get the following result:
+che praticamente esegue dei test sui metodi delle classi che l'esercitazione prevede di implementare. 
+Di base, senza modifiche, l'output che dovreste avere è questo:
 
     17 tests, 3 passed, 14 failed
 
-Once everything is implemented correctly, you will get:
+Una volta che l'esercitazione sia completata con successo, dovreste avere questo output:
 
     17 tests, 17 passed, 0 failed
 
-Getting all tests passed is not a guarantee that your program is 100% correct. We are going to do a lot more extensive testing.
-
-
+Il fatto che il vostro codice superi tutti i test è un buon segno, ma non assicura che sia totalmente corretto. 
+Potete aggiungere altri test per rendere più robuste, o efficienti, le vostre implementazioni.  
 
 ## Image basics ##
 
@@ -107,6 +107,60 @@ to load a new image. To save an image use:
 Feel free to explore `image.h` and the `struct Image {...}` to familiarize with it. Also explore the other provided files if you are interested in the implementation of loading/saving, etc. We use the `stb_image` libary for the actual loading and saving of jpgs because that is, like, REALLY complicated. I think. I've never tried.
 
 You'll be modifying and submitting `ONLY` the files `src/process_image.cpp` and `src/access_image.cpp`.
+
+## Nozioni di base sulle immagini ##
+
+Il codice rende disponibile una struttura C++ di base per memorizzare le immagini nella nostra libreria. 
+La struttura `Image` memorizza i metadati dell'immagine come larghezza, altezza e numero di canali. 
+Contiene anche i dati dell'immagine archiviati come array a virgola mobile. La trovate nel file `src/image.h`, 
+ed è più o meno questa:
+
+    struct Image
+    {
+        int h,w,c;
+        float *data;
+        .......
+    };
+
+Se volete creare una nuova immagine con dimensioni Larghezza x Altezza x Canali potete definire:
+
+    Image im(w,h,c);
+
+La struttura definisce e implementa tutti gli operatori necessari per copiare, riassegnare, passare come riferimento a funzioni, ecc.:
+
+    Image im(5,6,7);
+    Image im2=im;
+
+    im=im2;
+
+    void scramble_image(const Image& image);
+
+Passate sempre le immagini come `const Image& image` se volete solo accedere in lettura al contenuto, 
+o `Image& image` se volete modificarle. Guardate al codice fornito come esempio.
+
+Se volete accedere ai pixel potete scrivere:
+
+    float value = im(0,2,1); // gets the pixel at column 0, row 2 and channel 1
+    im(3,0,2) = 0.76;  // sets the pixel at column 3, row 0 and channel 2
+
+Se specifichi le coordinate fuori limite, riceverai un errore.
+
+Abbiamo anche previsto alcune funzioni per caricare e salvare le immagini. Il formato binario potrebbe tornare utile più avanti nel corso. Utilizzare una delle funzioni (sia membro che standalone):
+
+    Immagine im = load_image("immagine.jpg");
+    im.load_image("un altro.png");
+    im.load_binary("binary.bin");
+
+
+per caricare una nuova immagine. Per salvare un'immagine utilizzare:
+
+    im.save_image("output"); // save_image salva l'immagine come file .jpg
+    im.save_png("output"); // save_png salva l'immagine come file .png
+    im.save_binary("output.bin") // save_binary salva come file binario non elaborato
+
+Sentiti libero di esplorare `image.h` e `struct Image {...}` per familiarizzare con esso. Esplora anche gli altri file forniti se sei interessato all'implementazione del caricamento/salvataggio, ecc. Usiamo la libreria `stb_image` per il caricamento e il salvataggio effettivo di jpg perché è, tipo, DAVVERO complicato. Penso. Non ho mai provato.
+
+Modificherai e invierai "SOLO" i file "src/process_image.cpp" e "src/access_image.cpp".
 
 
 ## 1. Getting and setting pixels ##
