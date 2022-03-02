@@ -1,5 +1,5 @@
-# Disclamer: This lab is heavily based on the 576 homework that you can find here: # 
-## https://github.com/holynski/cse576_sp20_hw1 ##
+### Disclamer: This lab is heavily based on the 576 homework that you can find here: ###
+#### https://github.com/holynski/cse576_sp20_hw1 ####
 
 # Esercitazione 1 di AI-Lab #
 
@@ -357,9 +357,8 @@ In `test.c` converte un immagine HSV, aumenta la saturazione, e poi la ritrasfor
 
 ![Saturated dog picture](figs/dog_saturated.jpg)
 
-Hey that's exciting! Play around with it a little bit, see what you can make. Note that with the above method we do get 
-some artifacts because we are trying to increase the saturation in areas that have very little color. 
-Instead of shifting the saturation, you could scale the saturation by some value to get smoother results!
+Notate che ci sono alcuni piccoli artefatti perché cerchiamo di aumentare la saturazione in aree che hanno poco colore. 
+Invece di fare lo shift è meglio moltiplicare il valore per ottenere un risultato più uniforme.
 
 ## 8. Scalatura dei canali ##
 
