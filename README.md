@@ -60,7 +60,9 @@ Potete aggiungere altri test per rendere più robuste, o efficienti, le vostre i
 
 ## Image basics ##
 
-We have a basic C++ structure to store images in our library. The `Image` struct stores the image metadata like width, height, and number of channels. It also contains the image data stored as a floating point array. You can check it out in `src/image.h`, it looks like this:
+Nel file src/image.h trovate una struttura di base per le immagini. Questa struct `Image` contiene i metadati come width, 
+height e il numero dei canali. I dati dell'immagine vera e propria sono contenuti in un array di float. 
+La struttura ha questo aspetto:
 
     struct Image
     {
@@ -69,11 +71,11 @@ We have a basic C++ structure to store images in our library. The `Image` struct
         .......
     };
 
-If you want to make a new image with dimensions Width x Height x Channels you can define:
+Per creare una nuova immagine, basta chiamare il costruttore:
 
     Image im(w,h,c);
 
-The structure has all the necessary operators defined, so you can copy, reassign, pass as a reference to functions, etc.:
+La struttura ha diversi operatori per copiare, assegnare, passare come riferimento, etc.:
 
     Image im(5,6,7);
     Image im2=im;
@@ -82,124 +84,84 @@ The structure has all the necessary operators defined, so you can copy, reassign
 
     void scramble_image(const Image& image);
 
-Always pass images as `const Image& image` if you are accessing only or `Image& image` if modifying. See the provided code for guidance.
+Quando passate le immagini alle funzioni o metodi, se intendete passarle solo in lettura scrivete `const Image& image`, 
+altrimenti usate `Image& image` per modificarle. Nel codice trovate esempi di questi due comportamenti.
 
-If you want to access pixels you can do:
+Per accedere ai pixel potete usare questi metodi:
 
     float value = im(0,2,1); // gets the pixel at column 0, row 2 and channel 1
     im(3,0,2) = 0.76;  // sets the pixel at column 3, row 0 and channel 2
 
-If you specify out of bounds coordinates you will get an error.
+Vi daranno errore se mettere in input valori che vanno oltre le dimensioni dell'immagine. 
 
-We have also provided some functions for loading and saving images. The binary format might become useful later in the course. Use any of the functions (both member and standalone):
+Sono fornite anche alcune funzioni (membri della classe e standalone) per caricare e salvare le immagini.
+Peer caricare:
 
     Image im = load_image("image.jpg");
     im.load_image("another.png");
     im.load_binary("binary.bin");
 
-
-to load a new image. To save an image use:
+Per salvere:
 
     im.save_image("output");   // save_image saves the image as a .jpg file
     im.save_png("output");     // save_png  saves the image as a .png file
     im.save_binary("output.bin") // save_binary saves as a raw binary file
 
-Feel free to explore `image.h` and the `struct Image {...}` to familiarize with it. Also explore the other provided files if you are interested in the implementation of loading/saving, etc. We use the `stb_image` libary for the actual loading and saving of jpgs because that is, like, REALLY complicated. I think. I've never tried.
-
-You'll be modifying and submitting `ONLY` the files `src/process_image.cpp` and `src/access_image.cpp`.
-
-## Nozioni di base sulle immagini ##
-
-Il codice rende disponibile una struttura C++ di base per memorizzare le immagini nella nostra libreria. 
-La struttura `Image` memorizza i metadati dell'immagine come larghezza, altezza e numero di canali. 
-Contiene anche i dati dell'immagine archiviati come array a virgola mobile. La trovate nel file `src/image.h`, 
-ed è più o meno questa:
-
-    struct Image
-    {
-        int h,w,c;
-        float *data;
-        .......
-    };
-
-Se volete creare una nuova immagine con dimensioni Larghezza x Altezza x Canali potete definire:
-
-    Image im(w,h,c);
-
-La struttura definisce e implementa tutti gli operatori necessari per copiare, riassegnare, passare come riferimento a funzioni, ecc.:
-
-    Image im(5,6,7);
-    Image im2=im;
-
-    im=im2;
-
-    void scramble_image(const Image& image);
-
-Passate sempre le immagini come `const Image& image` se volete solo accedere in lettura al contenuto, 
-o `Image& image` se volete modificarle. Guardate al codice fornito come esempio.
-
-Se volete accedere ai pixel potete scrivere:
-
-    float value = im(0,2,1); // gets the pixel at column 0, row 2 and channel 1
-    im(3,0,2) = 0.76;  // sets the pixel at column 3, row 0 and channel 2
-
-Se specifichi le coordinate fuori limite, riceverai un errore.
-
-Abbiamo anche previsto alcune funzioni per caricare e salvare le immagini. Il formato binario potrebbe tornare utile più avanti nel corso. Utilizzare una delle funzioni (sia membro che standalone):
-
-    Immagine im = load_image("immagine.jpg");
-    im.load_image("un altro.png");
-    im.load_binary("binary.bin");
-
-
-per caricare una nuova immagine. Per salvare un'immagine utilizzare:
-
-    im.save_image("output"); // save_image salva l'immagine come file .jpg
-    im.save_png("output"); // save_png salva l'immagine come file .png
-    im.save_binary("output.bin") // save_binary salva come file binario non elaborato
-
-Sentiti libero di esplorare `image.h` e `struct Image {...}` per familiarizzare con esso. Esplora anche gli altri file forniti se sei interessato all'implementazione del caricamento/salvataggio, ecc. Usiamo la libreria `stb_image` per il caricamento e il salvataggio effettivo di jpg perché è, tipo, DAVVERO complicato. Penso. Non ho mai provato.
-
-Modificherai e invierai "SOLO" i file "src/process_image.cpp" e "src/access_image.cpp".
+Potete esplorare il file `image.h` e `struct Image {...}` e anche tutti i file correlati che implementano metodi e 
+funzioni, se siete interessati. Il caricamento e il salvataggio usano la libreria stb_image, in quanto la gestione dei 
+formati immagine è al di là dei nostri scopi. 
+NB: gli unici file che dovranno essere modificati per questo esercizio sono 
+`src/process_image.cpp` e `src/access_image.cpp`.
 
 
 ## 1. Getting and setting pixels ##
 
-The most basic operation we want to do is change the pixels in an image. As we talked about in class, we represent an image as a 3 dimensional tensor. We have spatial information as well as multiple channels which combine together to form a color image:
+L'operazione fondamentale di cui abbiamo bisogno è cambiare i pixel dell'immagine. Un'immagine nel nostro caso è un 
+tensore tridimensionale che rappresenta le componenti di colore che compongono l'immagine:
 
 ![RGB format](figs/rgb.png)
 
-The convention is that the coordinate system starts at the top left of the image, like so:
+Per convenzione l'origine del sistema di coordinate è in alto a sinistra:
 
 ![Image coordinate system](figs/coords.png)
 
-In our `data` array we store the image in `CHW` format. The first pixel in data is at channel 0, row 0, column 0 (note that the rows correspond to the Y axes and columns correspond to the X axes). The next pixel is channel 0, row 0, column 1, then channel 0, row 0, column 2, etc. The accessor operator `image(1,2,1)` actually needs the address of the pixel value
+Nel nostro array i dati dell'immagine sono memorizzati con la sequenza 'canale-altezza-profondità' (`CHW`). Vale a dire,
+il primo pixel è quello del canale 0, riga 0, colonna 0, il secondo è canale 0, riga 0, colonna 1, il terzo canale 0, 
+riga 0, colonna 2, e così via. L'operatore di accesso `image(1,2,1)` richiede di sapere l'indirizzo del pixel per 
+operare e questo è l'oggetto del primo esercizio. 
 
-Your first task is to fill out the function that computes it in `src/access_image.cpp`:
+Dovreste riempire la funzione che trovate in `src/access_image.cpp`:
 
     int pixel_address(const Image& im, int x, int y, int ch);
 
-`pixel_address` should return the location in the data array of the pixel value at `x,y,ch`.
-
-Note that the `()` operator for `Image` is overloaded for pixel access (see `image.h`). It will use your `pixel_address` function to find the correct pixel location.
-
-Although by default the pixel access operator `image(1,2,1)` does bounds checking in some circumstances it is easier if we adopt a padding strategy and not worry about bounds. There are a number of possible padding strategies:
+la funzione `pixel_address` dovrebbe restituire la posizione nell'arrey di dati del pixel che si trova in `x,y,ch`.
+Fate caso che l'operatore `()` della struttura `Image` è un overload della funzione di accesso al pixel. Userà proprio 
+la funzione che implementerete.
+Anche se l'operatore di accesso `image(1,2,1)` farà il controllo del superamento degli estremi dell'immagine, è più semplice lavorare 
+introducendo una strategia di padding. Ci sono diverse strategie per questo:
 
 ![Image padding strategies](figs/pad.png)
 
-We will use the `clamp` padding strategy. This means that if the programmer asks for a pixel at column -3, use column 0, or if they ask for column 300 and the image is only 256x256 you will use column 255 (because of zero-based indexing).
+We will use the `clamp` padding strategy. This means that if the programmer asks for a pixel at column -3, 
+use column 0, or if they ask for column 300 and the image is only 256x256 you will use column 255 
+(because of zero-based indexing).
 
-Implement the following two functions in `src/access_image.cpp`:
+Useremo la strategia `clamp`, vale a dire che se il programmatore cerca di accedere al pixel in colonna -3, 
+la funzione userà la colonna 0. Se invece cercherà di accedere alla colonna 300 per un'immagine 256x256, la funzione 
+userà la colonna 255. 
+
+Implementate le seguenti due funzioni:
 
     float get_clamped_pixel(const Image& im, int x, int y, int ch);
     void set_pixel(Image& im, int x, int y, int c, float value);
 
-`set_pixel` should simply return without doing anything if you pass in out-of-bounds coordinates (pixel coordinates greater than the width or height, or less than zero). For `get_clamped_pixel` we will perform padding to the image.
+`set_pixel` dovrebbe uscire senza far nulla se passate delle coordinate fuori dagli estremi dell'immagine (out-of-bound).
+In `get_clamped_pixel` fare  il padding dell'immagine. 
+Potete usare l'operatore `()` per accederer ai pixel, ad esempio `im(3, 2, 0)`.
 
-Note that you can use the `()` operator e.g., `im(3, 2, 0)` to access pixels.
-
-
-We can test out our pixel-setting code on the dog image by removing all of the red channel. If you wish, make a new executable similar to `test0`, where you can explore using your newly written image library. Follow the example from `CMakeLists.txt` and `src/test/test0.cpp` to create new executables.
+Possiamo testare in nostro codice sull'immagine del cane rimuovendo il canale rosso. Potete anche creare un altro 
+eseguibile simile a `test0` per esplorare le funzioni che via via scriverete. Seguite l'esempio del `CMakeLists.txt` e
+`src/test/test0.cpp` per farlo. 
 
     // 1-2. Getting and setting pixels
     Image im2 = load_image("data/dog.jpg");
@@ -208,16 +170,18 @@ We can test out our pixel-setting code on the dog image by removing all of the r
             im2(i, j, 0) = 0;
     im2.save_image("output/set_pixel_result");
 
-Then try running it. Check out our very not red dog:
+L'immagine del cane senza il canale rosso dovrebbe essere così:
 
 ![](figs/dog_no_red.jpg)
 
 
 ## 2. Copying images ##
 
-Sometimes you have an image and you want to copy it! To do this we should make a new image of the same size and then fill in the data array in the new image. You could do this by assigning pixels from one image to another, by looping over the whole array and just copying the floats (pop quiz: if the image is 256x256x3, how many total pixels are there?), or by using the built-in memory copying function `memcpy`.
+Qualche volta avete il bisogno di copiare una immagine. Per farlo dovete creare una nuova immagine della stessa 
+dimensione e travasare i dati. Lo potete fare assegnando sistematicamente un pixel da una immagine all'altra usando 
+dei cicli, o usando la funzione di libreria `memcpy`.
 
-Fill in the function `void copy_image(Image& to, const Image& from)` in `src/access_image.cpp` with your code.
+Ora implementate la funzione `void copy_image(Image& to, const Image& from)` contenuta in `src/access_image.cpp`.
 
 ## 3. Grayscale image ##
 
