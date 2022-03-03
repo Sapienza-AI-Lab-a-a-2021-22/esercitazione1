@@ -65,7 +65,19 @@ void test_shift()
   TEST(within_eps(im.data[im.w*im.h+47] + .1,  c.data[im.w*im.h + 47]));
   }
 
-
+void test_scale()
+{
+    Image im = load_image("data/dog.jpg");
+    Image s = im;
+    rgb_to_hsv(im);
+    rgb_to_hsv(s);
+    scale_image(s, 1, 2);
+    int ch_size = im.w*im.h;
+    TEST(within_eps(im.data[ch_size]*2, s.data[ch_size]));
+    TEST(within_eps(im.data[ch_size+72]*2,  s.data[ch_size + 72]));
+    TEST(within_eps(im.data[2*ch_size+72],  s.data[2*ch_size + 72]));
+    TEST(within_eps(im.data[47],  s.data[47]));
+}
 
 void test_rgb_to_hsv()
   {
@@ -101,6 +113,7 @@ void run_tests()
   test_set_pixel();
   test_copy();
   test_shift();
+  test_scale();
   test_grayscale();
   test_rgb_to_hsv();
   test_hsv_to_rgb();

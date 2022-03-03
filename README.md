@@ -20,7 +20,7 @@ Seguite le istruzioni che trovate qui:
 
     https://cmake.org/install/
 
-### Compile ###
+### Compilazione ###
 Potete usare la classica pipeline `cmake` e `make`, oppure lo script
 `compile.sh`. In alternativa potete utilizzare un IDE come CLion per compilare tutto.
 
@@ -49,11 +49,11 @@ Ogni volta che fate dei cambiamenti al codice dovete compilare. Il programma da 
 che praticamente esegue dei test sui metodi delle classi che l'esercitazione prevede di implementare. 
 Di base, senza modifiche, l'output che dovreste avere è questo:
 
-    17 tests, 3 passed, 14 failed
+    21 tests, 3 passed, 18 failed
 
 Una volta che l'esercitazione sia completata con successo, dovreste avere questo output:
 
-    17 tests, 17 passed, 0 failed
+    21 tests, 21 passed, 0 failed
 
 Il fatto che il vostro codice superi tutti i test è un buon segno, ma non assicura che sia totalmente corretto. 
 Potete aggiungere altri test per rendere più robuste, o efficienti, le vostre implementazioni.  
