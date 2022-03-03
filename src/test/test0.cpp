@@ -117,7 +117,7 @@ void run_tests()
   test_grayscale();
   test_rgb_to_hsv();
   test_hsv_to_rgb();
-  test_rgb2lch2rgb();
+//  test_rgb2lch2rgb();
   printf("%d tests, %d passed, %d failed\n", tests_total, tests_total-tests_fail, tests_fail);
   }
 

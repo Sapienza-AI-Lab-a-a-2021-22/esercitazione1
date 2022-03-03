@@ -49,11 +49,11 @@ Ogni volta che fate dei cambiamenti al codice dovete compilare. Il programma da 
 che praticamente esegue dei test sui metodi delle classi che l'esercitazione prevede di implementare. 
 Di base, senza modifiche, l'output che dovreste avere è questo:
 
-    21 tests, 3 passed, 18 failed
+    20 tests, 3 passed, 17 failed
 
 Una volta che l'esercitazione sia completata con successo, dovreste avere questo output:
 
-    21 tests, 21 passed, 0 failed
+    20 tests, 20 passed, 0 failed
 
 Il fatto che il vostro codice superi tutti i test è un buon segno, ma non assicura che sia totalmente corretto. 
 Potete aggiungere altri test per rendere più robuste, o efficienti, le vostre implementazioni.  
@@ -376,11 +376,14 @@ migliore:
 
 ![Dog saturated smoother](figs/dog_scale_saturated.jpg)
 
-## 9. Conversione a LUV e viceversa ##
+[//]: # (## 9. Conversione a LUV e viceversa ##)
 
-Implementate la traformazione da RGB a [Hue, Chroma, Lightness](https://en.wikipedia.org/wiki/CIELUV#Cylindrical_representation_.28CIELCH.29),
-una versione più accurata dal punto di vista della percezione umana. Questa include la gamma decompressioin, la converione 
-a CIE XYZ, poi a CIE LUV, infine a HCL. Implementate anche la trasformazione inversa.
+[//]: # ()
+[//]: # (Implementate la traformazione da RGB a [Hue, Chroma, Lightness]&#40;https://en.wikipedia.org/wiki/CIELUV#Cylindrical_representation_.28CIELCH.29&#41;,)
+
+[//]: # (una versione più accurata dal punto di vista della percezione umana. Questa include la gamma decompressioin, la converione )
+
+[//]: # (a CIE XYZ, poi a CIE LUV, infine a HCL. Implementate anche la trasformazione inversa.)
 
 [1]: https://en.wikipedia.org/wiki/SRGB#The_sRGB_transfer_function_("gamma")
 [2]: https://en.wikipedia.org/wiki/Luma_(video)
