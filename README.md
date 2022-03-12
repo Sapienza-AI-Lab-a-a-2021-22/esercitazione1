@@ -1,4 +1,4 @@
-### Disclamer: This lab is heavily based on the 576 homework that you can find here: ###
+### Disclamer: This lab is heavily based on the CSE 576 homework that you can find here: ###
 #### https://github.com/holynski/cse576_sp20_hw1 ####
 
 # Esercitazione 1 di AI-Lab #
